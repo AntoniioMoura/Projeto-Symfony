@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security')}}</div>
+    {% endif %}
+    <div class="container">
+        <div class="col-md-4 offset-md-4">
+            {% include '@App/includes/messages.html.twig' %}
+            <h1>Acessar Sistema</h1>
+
+            <hr>
+            <form action="{{ path('login') }}" method="post" >
+                <div class="form-group ">
+                    <label for="username">E-mail:</label>
+                    <input type="text" id="username" name="_username" value="{{ last_username }}"/>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="_password"/>
+                </div>
+                <div class="d-flex justify-content-center px-ml-5"><button class="btn btn btn-success d-flex">Entrar</button></div>
+                <br>
+            </form>
+            <p>Não possui uma conta?  <a href="{{ path('post_create') }}"><button class="btn btn btn-secondary">Cadastre-se</button></a></p>
+
+        </div>
+    </div>
+
+
+{% endblock %}

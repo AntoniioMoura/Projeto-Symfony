@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="text-center"><h2>Cardápio</h2></div>
+    {% if is_granted('ROLE_ADMIN') %}
+      <div class="text-center"><a href="{{ path('criar_pizza') }}"><button class="btn-lg btn btn-warning">Cadastrar Pizza</button></a></div>
+    {% endif %}
+    <br>
+    <div class="container">
+        <div class="col-mds-12">
+            {% include '@App/includes/messages.html.twig' %}
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Sabor</th>
+                <th>Ingredientes</th>
+                <th>Valor</th>
+                <th>Adicionar</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>Remover</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for u in pizzas %}
+                <tr>
+                    {% if is_granted('ROLE_ADMIN') %}
+                      <td><a href="{{ path('edit_pizza', {'id': u.id }) }}">{{ u.nome() }}</a></td>
+                    {% else %}
+                        <td>{{ u.nome() }}</td>
+                        {% endif %}
+                    <td>{{ u.ingredientes() }}</td>
+                    <td>R$: {{ u.valor() }}</td>
+                    <td><button type="button" class="btn-success">Comprar</button></td>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td><a href="{{ path('remove_pizza', {'post': u.id}) }}"><button class="alert-danger">Remover</button></a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

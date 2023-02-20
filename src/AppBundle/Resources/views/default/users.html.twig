@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="text-center"><h2>Usuarios</h2></div>
+    <br>
+    <div class="container">
+        <div class="col-mds-12">
+            {% include '@App/includes/messages.html.twig' %}
+        </div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>e-mail</th>
+                <th>Endereço</th>
+                <th>Telefone</th>
+                <th>Criado em</th>
+                <th>Remover</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for u in users %}
+                <tr>
+                    <td>{{ u.id() }}</td>
+                    <td><a href="{{ path('post_edit', {'id': u.id }) }}">{{ u.nome() }}</a></td>
+                    <td>{{ u.email }}</td>
+                    <td>{{ u.endereco() }}</td>
+                    <td>{{ u.telefone() }}</td>
+                    <td>{{ u.createdAt() | date("d/m/Y") }}</td>
+                    <td><a href="{{ path('remove_user', {'post': u.id}) }}"><button class="alert-danger">Remover</button></a></td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
